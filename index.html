@@ -12,7 +12,23 @@
     <button id="expand"><</button>
     <div id="side-bar">
         <h2>Folders</h2>
+        <div id="folders"></div>
+        <button class="add" id="add-folder">+</button> 
     </div>
-    <div id="content"></div>
+    <div id="folder-form" style="display: none">
+        <div id="blur"></div>
+        <form>
+            <label for="title">Folder Name:</label><br>
+            <input type="text" id="title" name="title">
+            <div>
+                <button type="button" id="save-folder" class="folder-button">Save</button>
+                <button type="button" id="cancel-folder" class="folder-button">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div id="content">
+        <ul id="items"></ul>
+        <button class="add" id="add-items">+</button>
+    </div>
 </body>
 </html>
