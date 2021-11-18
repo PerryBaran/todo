@@ -5,6 +5,7 @@
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 }
 
+/*top bar*/
 h1 {
     width: 100%;
     height: 45px;
@@ -15,6 +16,7 @@ h1 {
     z-index: 1;
 }
 
+/*Folders*/
 #expand {
     position: absolute;
     top: 50px;
@@ -32,6 +34,76 @@ h1 {
     z-index: 9;
 }
 
+.add{
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    height: 50px;
+    aspect-ratio: 1;
+    border: 1px solid black;
+    border-radius: 2000px;
+    cursor: pointer;
+}
+
+
+/*forms*/
+form {
+    position: absolute;
+    display: block;
+    text-align: center;
+    margin: auto;
+    inset: 0;
+    text-align: center;
+    width: 300px;
+    height: 100px;
+    background-color: grey;
+    border-radius: 5px;
+    z-index: 20;
+}
+
+label {
+    font-size: 1.5rem;
+}
+
+input {
+    width: 250px;
+    height: 30px;
+    margin: 5px;
+}
+
+#blur {
+    position: absolute;
+    inset: 0;
+    z-index: 15;
+    background-color: grey;
+    opacity: 0.5;
+    backdrop-filter: blur(0.1rem);
+}
+
+/*Folders styling*/
+.folders-list {
+    width: 98%;
+}
+
+h3 {
+    display: inline-flex;
+    width: calc(100% - var(--del-width))
+}
+
+:root {
+    --del-width: 40px;
+}
+
+.del-folder {
+    display: inline-flex;
+    width: var(--del-width);
+    text-align: center;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+
+/*Scalability*/
 @media screen and (min-width: 500px){
     #side-bar {
         position: absolute;
