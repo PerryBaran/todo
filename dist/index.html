@@ -10,7 +10,7 @@
 <body>
     <h1>TODO</h1>
     <button id="expand"><</button>
-    <div id="side-bar">
+    <div id="side-bar" class="scroll">
         <h2>Folders</h2>
         <div id="folders"></div>
         <button class="add" id="add-folder">+</button> 
@@ -19,7 +19,7 @@
         <div id="blur"></div>
         <form>
             <label for="title">Folder Name:</label><br>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" name="title" class="name-folder">
             <div>
                 <button type="button" id="save-folder" class="folder-button">Save</button>
                 <button type="button" id="cancel-folder" class="folder-button">Cancel</button>
@@ -27,7 +27,7 @@
         </form>
     </div>
     <div id="content">
-        <div id="items"></div>
+        <div id="items" class="scroll"></div>
     </div>
 </body>
 </html>

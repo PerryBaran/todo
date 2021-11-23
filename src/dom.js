@@ -62,6 +62,7 @@ export function populateMain(myArray) {
         const hideDescription = document.createElement('button');
         hideDescription.innerHTML = 'More Info';
         hideDescription.className = 'hide'
+        hideDescription.dataset.index = i;
         wrapper.appendChild(hideDescription)
 
         const dueDate = document.createElement('input');
@@ -87,11 +88,13 @@ export function populateMain(myArray) {
         del.className = 'del-task';
         wrapper.appendChild(del);
         
-        const description = document.createElement('input');
+        const description = document.createElement('textarea');
         description.value = myArray[i].description;
         description.className = 'description';
+        description.id = i;
         task.appendChild(description);
     }
+    descriptionAutoSize()
 }
 
 export function createAddButton(input) {
@@ -102,4 +105,31 @@ export function createAddButton(input) {
     addButton.id = 'add-task'
     addButton.dataset.index = input;
     container.appendChild(addButton);
+}
+
+export function showHideDescription(description, button) {
+    if (button.innerHTML === 'More Info') {
+        description.style.display = 'flex';
+        button.innerHTML = 'Close Info';
+    } else {
+        description.style.display = 'none';
+        button.innerHTML = 'More Info';
+    }
+}
+
+//autosizes the description text area
+function descriptionAutoSize() {
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+        if (tx[i].scrollHeight === 0) { 
+            tx[i].setAttribute("style", "height:39px;overflow-y:hidden;"); //set height if text area is empty
+        } else {
+            tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+        } tx[i].addEventListener("input", OnInput, false);
+    }
+
+    function OnInput() {
+        this.style.height = "auto";
+        this.style.height = (this.scrollHeight + 5) + "px";
+    }
 }

@@ -1,4 +1,4 @@
-import { showFormDOM, hideFormDOM, populateSideBar, createAddButton, populateMain } from "./dom";
+import { showFormDOM, hideFormDOM, populateSideBar, createAddButton, populateMain, showHideDescription } from "./dom";
 import { createFolder, createNewTask} from "./todo";
 import { populateStorage} from "./local-storage";
 
@@ -29,6 +29,7 @@ function folderArrayListener(myArray) {
             populateMain(myArray[button.dataset.index]);
             createAddButton(button.dataset.index);
             addTaskListener(myArray);
+            displayDescriptionListener();
         })
     })
 };
@@ -42,9 +43,11 @@ function addTaskListener(myArray) {
         populateMain(myArray[addTask.dataset.index]);
         createAddButton(addTask.dataset.index)
         addTaskListener(myArray);
+        displayDescriptionListener();
     })
 }
 
+//save and cancel the create folder event listeners
 const addFolder = document.getElementById('add-folder');
 const addFolderForm = document.getElementById('folder-form');
 
@@ -54,7 +57,6 @@ export function addFolderEventListener(){
      });
 }
 
-//save and cancel the create folder event listeners
 const saveFolder = document.getElementById('save-folder');
 const title = document.getElementById('title');
 
@@ -76,3 +78,13 @@ export function cancelFolderEventListener(){
     });
 };
 
+function displayDescriptionListener(){
+    const display = document.getElementsByClassName('hide');
+    const displayArray = Array.from(display);
+    displayArray.forEach(button => {
+        button.addEventListener('click', () => {
+            const description = document.getElementById(button.dataset.index);
+            showHideDescription(description, button);
+        });
+    });
+}

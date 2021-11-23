@@ -3,6 +3,7 @@
     margin: auto;
     font-family:monospace;
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+    overflow: hidden;
 }
 
 :root {
@@ -40,12 +41,14 @@ h1 {
     background-color: rgb(247, 247, 247);
     border-right: 2px solid rgb(238, 238, 238);
     z-index: 9;
+    overflow-y: scroll;
 }
 
 .add{
     display: block;
     margin: auto;
     margin-top: 5px;
+    margin-bottom: 5px;
     height: 50px;
     aspect-ratio: 1;
     border: 1px solid black;
@@ -72,7 +75,7 @@ label {
     font-size: 1.5rem;
 }
 
-input {
+.name-folder {
     width: 250px;
     height: 30px;
     margin: 5px;
@@ -110,9 +113,17 @@ h3 {
     margin-bottom: 1px;
 }
 
+#items {
+    height: 100%;
+    overflow-y: scroll;
+}
+
 /*Tasks styling*/
 .title {
     font-size: 2rem;
+    margin-top: 5px;
+    margin-left: 20px;
+    border: none;
 }
 
 .task {
@@ -126,55 +137,64 @@ h3 {
     width: 100%;
 }
     .name {
-        width: 60%;
+        width: 100%;
+        margin: 5px;
     }
 
     .hide {
-
-    }    
-
-    .date {
-        width: 27%;
-        min-width: 136px;
+        margin: 5px;
     }
 
-    .priority {
+    .date {
+        width: 256px;
+        margin: 5px;
+    }
+
+    input[type=checkbox]{
         -webkit-appearance: none;
-        width: 50px;
+        min-width: 30px;
+        width: 30px;
         aspect-ratio: 1;
-        min-width: 20px;
         border: 1px solid grey;
         border-radius: 2px;
+        margin-left: 5px;
+        margin-right: 5px;
         cursor: pointer;
+        text-align: center;
     }
 
     .priority:checked {
-        -webkit-appearance: none;
         background-color: yellow;
     }
 
     .priority:checked:after {
         content: '!';
-        position: relative;
-        left: 24%;
         font-size: 2rem;
     }
 
-    .completion {
-        width: 20%;
-        min-width: 20px;
-        cursor: pointer;
+    .completion:checked {
+        background-color: rgb(8, 219, 8);
+    }
+
+    .completion:checked:after {
+        content: '\2713';
+        font-size: 2rem;
     }
 
     .del-task {
-        margin-left: 5%;
-        margin-right: 5%;
+        display: inline-flex;
+        width: var(--del-width);
+        justify-content: center;
+        padding: auto;
+        margin-right: 5px;
     }
     
 .description {
     display: none;
     flex-direction: column;
-    width: 100%;
+    width: 98%;
+    resize: vertical;
+    margin-bottom: 5px;
 }
 /*Scalability*/
 @media screen and (min-width: 600px){
