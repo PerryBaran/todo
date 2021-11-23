@@ -27,6 +27,7 @@ function folderArrayListener(myArray) {
     newArray.forEach(button => {
         button.addEventListener('click', () => {
             populateMain(myArray[button.dataset.index]);
+            allTasksListener(myArray[button.dataset.index], myArray)
             createAddButton(button.dataset.index);
             addTaskListener(myArray);
             displayDescriptionListener();
@@ -41,6 +42,7 @@ function addTaskListener(myArray) {
         populateStorage('folders', myArray);
         createSideBar(myArray);
         populateMain(myArray[addTask.dataset.index]);
+        allTasksListener(myArray[addTask.dataset.index]);
         createAddButton(addTask.dataset.index)
         addTaskListener(myArray);
         displayDescriptionListener();
@@ -87,4 +89,56 @@ function displayDescriptionListener(){
             showHideDescription(description, button);
         });
     });
+}
+
+function allTasksListener(subArray, myArray) {
+    //name listener
+    const name = document.getElementsByClassName('name');
+    const nameArray = Array.from(name);
+    nameArray.forEach(input => {
+        input.addEventListener('input', () => {
+            subArray[input.dataset.index].name = input.value;
+            populateStorage('folders', myArray);
+        })
+    })
+
+    //description listener
+    const description = document.getElementsByClassName('description');
+    const descriptionArray = Array.from(description);
+    descriptionArray.forEach(input => {
+        input.addEventListener('input', () => {
+            subArray[input.dataset.index].description = input.value;
+            populateStorage('folders', myArray);
+        })
+    })
+
+    //date listener
+    const date = document.getElementsByClassName('date');
+    const dateArray = Array.from(date);
+    dateArray.forEach(input => {
+        input.addEventListener('input', () => {
+            subArray[input.dataset.index].dueDate = input.value;
+            populateStorage('folders', myArray);
+        })
+    })
+
+    //priority listener
+    const priority = document.getElementsByClassName('priority');
+    const priorityArray = Array.from(priority);
+    priorityArray.forEach(input => {
+        input.addEventListener('input', () => {
+            subArray[input.dataset.index].priority = (input.checked ? true: false);
+            populateStorage('folders', myArray);
+        })
+    })
+
+     //completion listener
+     const completion = document.getElementsByClassName('completion');
+     const completionArray = Array.from(completion);
+     completionArray.forEach(input => {
+         input.addEventListener('input', () => {
+             subArray[input.dataset.index].completion = (input.checked ? true: false);
+             populateStorage('folders', myArray);
+         })
+     })
 }

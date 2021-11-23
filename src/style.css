@@ -142,11 +142,12 @@ h3 {
     }
 
     .hide {
+        width: 120px;
         margin: 5px;
     }
 
     .date {
-        width: 256px;
+        min-width: 135px;
         margin: 5px;
     }
 

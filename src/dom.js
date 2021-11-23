@@ -57,6 +57,7 @@ export function populateMain(myArray) {
         const name = document.createElement('input');
         name.value = myArray[i].name;
         name.className = 'name';
+        name.dataset.index = i;
         wrapper.appendChild(name);
 
         const hideDescription = document.createElement('button');
@@ -69,29 +70,34 @@ export function populateMain(myArray) {
         dueDate.setAttribute('type', 'date');
         dueDate.value = myArray[i].dueDate
         dueDate.className = 'date';
+        dueDate.dataset.index = i;
         wrapper.appendChild(dueDate);
 
         const priority = document.createElement('input');
         priority.setAttribute('type', 'checkbox');
         priority.checked = myArray[i].priority;
         priority.className = 'priority';
+        priority.dataset.index = i;
         wrapper.appendChild(priority);
 
         const completion = document.createElement('input');
         completion.setAttribute('type', 'checkbox');
         completion.checked = myArray[i].completion;
         completion.className = 'completion';
+        completion.dataset.index = i;
         wrapper.appendChild(completion);
 
         const del = document.createElement('button');
         del.innerHTML = 'X';
         del.className = 'del-task';
+        del.dataset.index = i;
         wrapper.appendChild(del);
         
         const description = document.createElement('textarea');
         description.value = myArray[i].description;
         description.className = 'description';
         description.id = i;
+        description.dataset.index = i;
         task.appendChild(description);
     }
     descriptionAutoSize()
