@@ -5,6 +5,14 @@
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 }
 
+:root {
+    --del-width: 30px;
+}
+
+button {
+    cursor: pointer;
+}
+
 /*top bar*/
 h1 {
     width: 100%;
@@ -42,7 +50,6 @@ h1 {
     aspect-ratio: 1;
     border: 1px solid black;
     border-radius: 2000px;
-    cursor: pointer;
 }
 
 
@@ -83,6 +90,9 @@ input {
 /*Folders styling*/
 .folders-list {
     width: 98%;
+    background-color:green;
+    margin-top: 5px;
+    cursor: pointer;
 }
 
 h3 {
@@ -90,21 +100,84 @@ h3 {
     width: calc(100% - var(--del-width))
 }
 
-:root {
-    --del-width: 40px;
-}
 
-.del-folder {
+
+.delete {
     display: inline-flex;
     width: var(--del-width);
-    text-align: center;
+    justify-content: center;
     margin-top: 1px;
     margin-bottom: 1px;
 }
 
+/*Tasks styling*/
+.title {
+    font-size: 2rem;
+}
 
+.task {
+    width: 95%;
+    margin-top: 5px;
+    border: 1px solid grey;
+}
+
+.wrapper {
+    display: inline-flex;
+    width: 100%;
+}
+    .name {
+        width: 60%;
+    }
+
+    .hide {
+
+    }    
+
+    .date {
+        width: 27%;
+        min-width: 136px;
+    }
+
+    .priority {
+        -webkit-appearance: none;
+        width: 50px;
+        aspect-ratio: 1;
+        min-width: 20px;
+        border: 1px solid grey;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .priority:checked {
+        -webkit-appearance: none;
+        background-color: yellow;
+    }
+
+    .priority:checked:after {
+        content: '!';
+        position: relative;
+        left: 24%;
+        font-size: 2rem;
+    }
+
+    .completion {
+        width: 20%;
+        min-width: 20px;
+        cursor: pointer;
+    }
+
+    .del-task {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    
+.description {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+}
 /*Scalability*/
-@media screen and (min-width: 500px){
+@media screen and (min-width: 600px){
     #side-bar {
         position: absolute;
         top: 45px;
@@ -125,13 +198,12 @@ h3 {
         position: absolute;
         top: 45px;
         left: 200px;
-        background-color: red;
         width: calc(100% - 200px);
         height: calc(100vh - 45px);
     }    
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 600px){
     #side-bar {
         display: none;
         position: absolute;

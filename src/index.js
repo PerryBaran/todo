@@ -1,4 +1,4 @@
 import './style.css';
-import { initialize } from './controller';
+import { initialize } from './main';
 
 initialize();
