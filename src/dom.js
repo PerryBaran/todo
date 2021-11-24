@@ -19,12 +19,20 @@ export function populateSideBar(myArray) {
     reset(parent)
     for (let i = 0; i < myArray.length; i++) {
         const newItem = document.createElement('div');
-        newItem.className = 'folders-list'
-        newItem.dataset.index = i;
+        if (i === 0) {
+            newItem.className = 'folders-list top'
+        } else {
+            newItem.className = 'folders-list'
+        } newItem.dataset.index = i;
 
+        const wrapper = document.createElement('div');
+        wrapper.className = 'folder';
+        wrapper.dataset.index = i;
+        newItem.appendChild(wrapper);
         const text = document.createElement('h3');
         text.innerHTML = myArray[i][0];
-        newItem.appendChild(text);
+
+        wrapper.appendChild(text);
 
         const del = document.createElement('button');
         del.innerHTML = 'X'
@@ -43,6 +51,7 @@ export function populateMain(myArray) {
     const createTitle = document.createElement('input');
     createTitle.value = myArray[0];
     createTitle.className = 'title';
+    createTitle.id = 'title';
     container.appendChild(createTitle);
     
     for (let i = 1; i < myArray.length; i++) {
@@ -89,7 +98,7 @@ export function populateMain(myArray) {
 
         const del = document.createElement('button');
         del.innerHTML = 'X';
-        del.className = 'del-task';
+        del.className = 'delTask';
         del.dataset.index = i;
         wrapper.appendChild(del);
         
@@ -137,5 +146,28 @@ function descriptionAutoSize() {
     function OnInput() {
         this.style.height = "auto";
         this.style.height = (this.scrollHeight + 5) + "px";
+    }
+}
+
+export function expandSideBar(button, sideBar) {
+    if (button.className === 'closed') {
+        button.innerHTML = '>';
+        sideBar.style.display = 'block';
+        button.className = 'open';
+    } else {
+        button.className = 'closed';
+        button.innerHTML = '<';
+        sideBar.style.display = 'none';
+    }
+}
+
+export function mediaQuery() {
+    const screenSize = window.matchMedia('(max-width: 600px)')
+    const sideBar =  document.getElementById('side-bar');
+    const expandFolders = document.getElementById('expand');
+    if (screenSize.matches) {
+        sideBar.style.display = 'none'
+        expandFolders.className = 'closed';
+        expandFolders.innerHTML = '<';
     }
 }

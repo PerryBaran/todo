@@ -1,4 +1,4 @@
-import { showFormDOM, hideFormDOM, populateSideBar, createAddButton, populateMain, showHideDescription } from "./dom";
+import { showFormDOM, hideFormDOM, populateSideBar, createAddButton, populateMain, showHideDescription, expandSideBar, mediaQuery } from "./dom";
 import { createFolder, createNewTask} from "./todo";
 import { populateStorage} from "./local-storage";
 
@@ -7,6 +7,14 @@ export function createSideBar(myArray) {
     populateSideBar(myArray);
     delArrayListener(myArray);
     folderArrayListener(myArray);
+}
+
+function buildPage(myArray, index) {
+    populateMain(myArray[index]);
+    allTasksListener(myArray, index)
+    createAddButton(index);
+    addTaskListener(myArray);
+    displayDescriptionListener();
 }
 
 function delArrayListener(myArray) {
@@ -22,15 +30,12 @@ function delArrayListener(myArray) {
 };
 
 function folderArrayListener(myArray) {
-    const folder = document.getElementsByClassName('folders-list');
+    const folder = document.getElementsByClassName('folder');
     const newArray = Array.from(folder);
     newArray.forEach(button => {
         button.addEventListener('click', () => {
-            populateMain(myArray[button.dataset.index]);
-            allTasksListener(myArray[button.dataset.index], myArray)
-            createAddButton(button.dataset.index);
-            addTaskListener(myArray);
-            displayDescriptionListener();
+            buildPage(myArray, button.dataset.index)
+            mediaQuery();
         })
     })
 };
@@ -41,11 +46,7 @@ function addTaskListener(myArray) {
         createNewTask(myArray, addTask.dataset.index)
         populateStorage('folders', myArray);
         createSideBar(myArray);
-        populateMain(myArray[addTask.dataset.index]);
-        allTasksListener(myArray[addTask.dataset.index]);
-        createAddButton(addTask.dataset.index)
-        addTaskListener(myArray);
-        displayDescriptionListener();
+        buildPage(myArray, addTask.dataset.index);
     })
 }
 
@@ -91,54 +92,77 @@ function displayDescriptionListener(){
     });
 }
 
-function allTasksListener(subArray, myArray) {
-    //name listener
-    const name = document.getElementsByClassName('name');
-    const nameArray = Array.from(name);
-    nameArray.forEach(input => {
+function allTasksListener(myArray, index) {
+    //title listener
+    const title = Array.from(document.getElementsByClassName('title'));
+    title.forEach(input => {
         input.addEventListener('input', () => {
-            subArray[input.dataset.index].name = input.value;
+            myArray[index][0] = input.value;
+            populateStorage('folders', myArray);
+            createSideBar(myArray);
+        })
+    });
+    
+    //name listener
+    const name = Array.from(document.getElementsByClassName('name'));
+    name.forEach(input => {
+        input.addEventListener('input', () => {
+            myArray[index][input.dataset.index].name = input.value;
             populateStorage('folders', myArray);
         })
-    })
+    });
 
     //description listener
-    const description = document.getElementsByClassName('description');
-    const descriptionArray = Array.from(description);
-    descriptionArray.forEach(input => {
+    const description = Array.from(document.getElementsByClassName('description'));
+    description.forEach(input => {
         input.addEventListener('input', () => {
-            subArray[input.dataset.index].description = input.value;
+            myArray[index][input.dataset.index].description = input.value;
             populateStorage('folders', myArray);
         })
-    })
+    });
 
     //date listener
-    const date = document.getElementsByClassName('date');
-    const dateArray = Array.from(date);
-    dateArray.forEach(input => {
+    const date = Array.from(document.getElementsByClassName('date'));
+    date.forEach(input => {
         input.addEventListener('input', () => {
-            subArray[input.dataset.index].dueDate = input.value;
+            myArray[index][input.dataset.index].dueDate = input.value;
             populateStorage('folders', myArray);
         })
-    })
+    });
 
     //priority listener
-    const priority = document.getElementsByClassName('priority');
-    const priorityArray = Array.from(priority);
-    priorityArray.forEach(input => {
+    const priority = Array.from(document.getElementsByClassName('priority'));
+    priority.forEach(input => {
         input.addEventListener('input', () => {
-            subArray[input.dataset.index].priority = (input.checked ? true: false);
+            myArray[index][input.dataset.index].priority = (input.checked ? true: false);
             populateStorage('folders', myArray);
         })
-    })
+    });
 
      //completion listener
-     const completion = document.getElementsByClassName('completion');
-     const completionArray = Array.from(completion);
-     completionArray.forEach(input => {
-         input.addEventListener('input', () => {
-             subArray[input.dataset.index].completion = (input.checked ? true: false);
-             populateStorage('folders', myArray);
-         })
-     })
+     const completion = Array.from(document.getElementsByClassName('completion'));
+     completion.forEach(input => {
+        input.addEventListener('input', () => {
+            myArray[index][input.dataset.index].completion = (input.checked ? true: false);
+            populateStorage('folders', myArray);
+        })
+    });
+
+    //delete task listener
+    const deleteTask = Array.from(document.getElementsByClassName('delTask'));
+    deleteTask.forEach(input => {
+        input.addEventListener('click', () => {
+            myArray[index].splice(input.dataset.index, 1);
+            populateStorage('folders', myArray);
+            buildPage(myArray, index);
+        })
+    })
+}
+
+export function expand() {
+    const expandFolders = document.getElementById('expand');
+    const sideBar =  document.getElementById('side-bar');
+    expandFolders.addEventListener('click', () => {
+        expandSideBar(expandFolders, sideBar)
+    })
 }

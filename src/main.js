@@ -1,5 +1,5 @@
 import { getLocalStorage } from "./local-storage";
-import { createSideBar, addFolderEventListener , cancelFolderEventListener ,saveFolderEventListener } from "./controllers";
+import { createSideBar, addFolderEventListener , cancelFolderEventListener ,saveFolderEventListener, expand } from "./controllers";
 
 export function initialize() {
     //get array of stored projects or default to empty
@@ -15,5 +15,6 @@ export function initialize() {
     cancelFolderEventListener();
     saveFolderEventListener(myFolders);
 
+    expand();
 }
 
