@@ -1,3 +1,4 @@
+//creates folders
 export function createFolder(myArray, newItem) {
     const newArray = [];
     newArray[0] = newItem.value
@@ -5,6 +6,7 @@ export function createFolder(myArray, newItem) {
     console.log(myArray)
 }
 
+//creates tasks
 export function createNewTask(myArray, index) {
     const newTask = {
         name:'Task' + myArray[index].length,

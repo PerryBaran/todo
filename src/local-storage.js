@@ -1,3 +1,4 @@
+//functions for saving and getting local storage
 export function getLocalStorage(name) {
     if (!localStorage.getItem(name)){
         return [];

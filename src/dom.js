@@ -13,7 +13,7 @@ export function hideFormDOM(formContainer) {
     formContainer.style.display = "none";
 }
 
-//
+//creates sidebars displaying folders
 export function populateSideBar(myArray) {
     const parent = document.getElementById('folders')
     reset(parent)
@@ -25,14 +25,11 @@ export function populateSideBar(myArray) {
             newItem.className = 'folders-list'
         } newItem.dataset.index = i;
 
-        const wrapper = document.createElement('div');
-        wrapper.className = 'folder';
-        wrapper.dataset.index = i;
-        newItem.appendChild(wrapper);
-        const text = document.createElement('h3');
+        const text = document.createElement('button');
         text.innerHTML = myArray[i][0];
-
-        wrapper.appendChild(text);
+        text.className = 'folder'
+        text.dataset.index = i;
+        newItem.appendChild(text);
 
         const del = document.createElement('button');
         del.innerHTML = 'X'
@@ -44,6 +41,7 @@ export function populateSideBar(myArray) {
     }
 }
 
+//displays tasks of selected folder
 export function populateMain(myArray) {
     const container = document.getElementById('items')
     reset(container)
@@ -57,6 +55,7 @@ export function populateMain(myArray) {
     for (let i = 1; i < myArray.length; i++) {
         const task = document.createElement('div');
         task.className = 'task';
+        task.id = 'task' + i;
         container.appendChild(task);
 
         const wrapper = document.createElement('div');
@@ -105,13 +104,14 @@ export function populateMain(myArray) {
         const description = document.createElement('textarea');
         description.value = myArray[i].description;
         description.className = 'description';
-        description.id = i;
+        description.id = 'description' + i;
         description.dataset.index = i;
         task.appendChild(description);
     }
     descriptionAutoSize()
-}
+};
 
+//creates add task button
 export function createAddButton(input) {
     const container = document.getElementById('items')
     const addButton = document.createElement('button')
@@ -122,13 +122,16 @@ export function createAddButton(input) {
     container.appendChild(addButton);
 }
 
-export function showHideDescription(description, button) {
+//More info show/hide description
+export function showHideDescription(description, task, button) {
     if (button.innerHTML === 'More Info') {
         description.style.display = 'flex';
         button.innerHTML = 'Close Info';
+        task.style.borderBottom = '1px solid grey';
     } else {
         description.style.display = 'none';
         button.innerHTML = 'More Info';
+        task.style.borderBottom = 'none';
     }
 }
 
@@ -149,6 +152,7 @@ function descriptionAutoSize() {
     }
 }
 
+//shows or hides sidebar
 export function expandSideBar(button, sideBar) {
     if (button.className === 'closed') {
         button.innerHTML = '>';
@@ -161,6 +165,7 @@ export function expandSideBar(button, sideBar) {
     }
 }
 
+//media query to hide sidebar on click
 export function mediaQuery() {
     const screenSize = window.matchMedia('(max-width: 600px)')
     const sideBar =  document.getElementById('side-bar');

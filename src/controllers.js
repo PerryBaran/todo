@@ -14,7 +14,6 @@ function buildPage(myArray, index) {
     allTasksListener(myArray, index)
     createAddButton(index);
     addTaskListener(myArray);
-    displayDescriptionListener();
 }
 
 function delArrayListener(myArray) {
@@ -53,7 +52,6 @@ function addTaskListener(myArray) {
 //save and cancel the create folder event listeners
 const addFolder = document.getElementById('add-folder');
 const addFolderForm = document.getElementById('folder-form');
-
 export function addFolderEventListener(){
     addFolder.addEventListener('click', () => {
         showFormDOM(addFolderForm);   
@@ -62,38 +60,40 @@ export function addFolderEventListener(){
 
 const saveFolder = document.getElementById('save-folder');
 const title = document.getElementById('title');
-
 export function saveFolderEventListener(myArray) {
     saveFolder.addEventListener('click', () => {
-        createFolder(myArray, title)
-        createSideBar(myArray);
-        hideFormDOM(addFolderForm);
-        title.value = '';
-        populateStorage('folders', myArray);
+        if (title.value.length < 1) {
+            alert('Folder name must contain atleast one character');
+        } else {
+            createFolder(myArray, title)
+            createSideBar(myArray);
+            hideFormDOM(addFolderForm);
+            title.value = '';
+            populateStorage('folders', myArray);
+        }
     });
 }
 
 const cancelFolder = document.getElementById('cancel-folder');
-
 export function cancelFolderEventListener(){
     cancelFolder.addEventListener('click', () => {
         hideFormDOM(addFolderForm);   
     });
 };
 
-function displayDescriptionListener(){
-    const display = document.getElementsByClassName('hide');
-    const displayArray = Array.from(display);
-    displayArray.forEach(button => {
-        button.addEventListener('click', () => {
-            const description = document.getElementById(button.dataset.index);
-            showHideDescription(description, button);
-        });
-    });
-}
-
+//listeners for all tasks inputs
 function allTasksListener(myArray, index) {
-    //title listener
+    titleListener(myArray, index);
+    nameListener(myArray, index);
+    descriptionListener(myArray, index);
+    dateListener(myArray, index);
+    priorityListener(myArray, index);
+    completionListener(myArray, index);
+    deleteTaskListener(myArray, index);
+    displayDescriptionListener();
+};
+
+function titleListener(myArray, index) {
     const title = Array.from(document.getElementsByClassName('title'));
     title.forEach(input => {
         input.addEventListener('input', () => {
@@ -102,8 +102,9 @@ function allTasksListener(myArray, index) {
             createSideBar(myArray);
         })
     });
-    
-    //name listener
+};
+
+function nameListener(myArray, index) {
     const name = Array.from(document.getElementsByClassName('name'));
     name.forEach(input => {
         input.addEventListener('input', () => {
@@ -111,8 +112,9 @@ function allTasksListener(myArray, index) {
             populateStorage('folders', myArray);
         })
     });
+};
 
-    //description listener
+function descriptionListener(myArray, index) {
     const description = Array.from(document.getElementsByClassName('description'));
     description.forEach(input => {
         input.addEventListener('input', () => {
@@ -120,8 +122,9 @@ function allTasksListener(myArray, index) {
             populateStorage('folders', myArray);
         })
     });
+};
 
-    //date listener
+function dateListener(myArray, index) {
     const date = Array.from(document.getElementsByClassName('date'));
     date.forEach(input => {
         input.addEventListener('input', () => {
@@ -129,8 +132,9 @@ function allTasksListener(myArray, index) {
             populateStorage('folders', myArray);
         })
     });
+};
 
-    //priority listener
+function priorityListener(myArray, index) {
     const priority = Array.from(document.getElementsByClassName('priority'));
     priority.forEach(input => {
         input.addEventListener('input', () => {
@@ -138,17 +142,19 @@ function allTasksListener(myArray, index) {
             populateStorage('folders', myArray);
         })
     });
+};
 
-     //completion listener
-     const completion = Array.from(document.getElementsByClassName('completion'));
-     completion.forEach(input => {
+function completionListener(myArray, index) {
+    const completion = Array.from(document.getElementsByClassName('completion'));
+    completion.forEach(input => {
         input.addEventListener('input', () => {
             myArray[index][input.dataset.index].completion = (input.checked ? true: false);
             populateStorage('folders', myArray);
         })
     });
+};
 
-    //delete task listener
+function deleteTaskListener(myArray, index) {
     const deleteTask = Array.from(document.getElementsByClassName('delTask'));
     deleteTask.forEach(input => {
         input.addEventListener('click', () => {
@@ -156,9 +162,23 @@ function allTasksListener(myArray, index) {
             populateStorage('folders', myArray);
             buildPage(myArray, index);
         })
-    })
+    });
+};
+
+//more info button - displays/hides description
+function displayDescriptionListener(){
+    const display = document.getElementsByClassName('hide');
+    const displayArray = Array.from(display);
+    displayArray.forEach(button => {
+        button.addEventListener('click', () => {
+            const description = document.getElementById('description' + button.dataset.index);
+            const task = document.getElementById('task' + button.dataset.index)
+            showHideDescription(description, task, button);
+        });
+    });
 }
 
+//expands and hides the sidebar
 export function expand() {
     const expandFolders = document.getElementById('expand');
     const sideBar =  document.getElementById('side-bar');
