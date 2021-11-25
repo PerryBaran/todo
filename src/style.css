@@ -176,7 +176,7 @@ label {
 
     .hide {
         height: 34px;
-        width: 100px;
+        min-width: 50px;
         border: none;
         border-right: 1px solid grey;
     }
