@@ -42,38 +42,46 @@ export function populateSideBar(myArray) {
 }
 
 //displays tasks of selected folder
-export function populateMain(myArray) {
+export function populateMain(myArray, index) {
+    //reset main container
     const container = document.getElementById('items')
     reset(container)
 
+    //create and append title
     const createTitle = document.createElement('input');
     createTitle.value = myArray[0];
     createTitle.className = 'title';
     createTitle.id = 'title';
     container.appendChild(createTitle);
-    
+
+    //loop through each task
     for (let i = 1; i < myArray.length; i++) {
+        //container for tasks
         const task = document.createElement('div');
         task.className = 'task';
         task.id = 'task' + i;
         container.appendChild(task);
 
+        //container to seperate description in css
         const wrapper = document.createElement('div');
         wrapper.className = 'wrapper';
         task.appendChild(wrapper);
 
+        //name
         const name = document.createElement('input');
         name.value = myArray[i].name;
         name.className = 'name';
         name.dataset.index = i;
         wrapper.appendChild(name);
 
+        //show/hide description button
         const hideDescription = document.createElement('button');
         hideDescription.innerHTML = 'More Info';
         hideDescription.className = 'hide'
         hideDescription.dataset.index = i;
         wrapper.appendChild(hideDescription)
 
+        //due date
         const dueDate = document.createElement('input');
         dueDate.setAttribute('type', 'date');
         dueDate.value = myArray[i].dueDate
@@ -81,6 +89,7 @@ export function populateMain(myArray) {
         dueDate.dataset.index = i;
         wrapper.appendChild(dueDate);
 
+        //priority
         const priority = document.createElement('input');
         priority.setAttribute('type', 'checkbox');
         priority.checked = myArray[i].priority;
@@ -88,6 +97,7 @@ export function populateMain(myArray) {
         priority.dataset.index = i;
         wrapper.appendChild(priority);
 
+        //completion
         const completion = document.createElement('input');
         completion.setAttribute('type', 'checkbox');
         completion.checked = myArray[i].completion;
@@ -95,12 +105,14 @@ export function populateMain(myArray) {
         completion.dataset.index = i;
         wrapper.appendChild(completion);
 
+        //delete task button
         const del = document.createElement('button');
         del.innerHTML = 'X';
         del.className = 'delTask';
         del.dataset.index = i;
         wrapper.appendChild(del);
         
+        //description
         const description = document.createElement('textarea');
         description.value = myArray[i].description;
         description.className = 'description';
@@ -109,6 +121,11 @@ export function populateMain(myArray) {
         task.appendChild(description);
     }
     descriptionAutoSize()
+};
+
+export function resetMain() {
+    const container = document.getElementById('items')
+    reset(container)
 };
 
 //creates add task button
@@ -153,15 +170,17 @@ function descriptionAutoSize() {
 }
 
 //shows or hides sidebar
-export function expandSideBar(button, sideBar) {
+export function expandSideBar(button, sideBar, content) {
     if (button.className === 'closed') {
-        button.innerHTML = '>';
         sideBar.style.display = 'block';
         button.className = 'open';
+        content.style.removeProperty('width');
+        content.style.removeProperty('left');
     } else {
         button.className = 'closed';
-        button.innerHTML = '<';
         sideBar.style.display = 'none';
+        content.style.width = '100%';
+        content.style.left = "0";
     }
 }
 
@@ -173,6 +192,5 @@ export function mediaQuery() {
     if (screenSize.matches) {
         sideBar.style.display = 'none'
         expandFolders.className = 'closed';
-        expandFolders.innerHTML = '<';
     }
 }

@@ -1,28 +1,29 @@
-import { showFormDOM, hideFormDOM, populateSideBar, createAddButton, populateMain, showHideDescription, expandSideBar, mediaQuery } from "./dom";
+import { showFormDOM, hideFormDOM, populateSideBar, createAddButton, populateMain, showHideDescription, expandSideBar, mediaQuery, resetMain } from "./dom";
 import { createFolder, createNewTask} from "./todo";
 import { populateStorage} from "./local-storage";
 
 //create side bars and side bar event listeners
 export function createSideBar(myArray) {
     populateSideBar(myArray);
-    delArrayListener(myArray);
+    delFolderListener(myArray);
     folderArrayListener(myArray);
 }
 
 function buildPage(myArray, index) {
-    populateMain(myArray[index]);
+    populateMain(myArray[index], index);
     allTasksListener(myArray, index)
     createAddButton(index);
     addTaskListener(myArray);
 }
 
-function delArrayListener(myArray) {
+function delFolderListener(myArray) {
     const del = document.getElementsByClassName('delete');
     const newArray = Array.from(del);
     newArray.forEach(button => {
         button.addEventListener('click', () => {
             myArray.splice(button.dataset.index, 1)
             createSideBar(myArray);
+            resetMain();
             populateStorage('folders', myArray);
         })
     })
@@ -182,7 +183,8 @@ function displayDescriptionListener(){
 export function expand() {
     const expandFolders = document.getElementById('expand');
     const sideBar =  document.getElementById('side-bar');
+    const main = document.getElementById('content')
     expandFolders.addEventListener('click', () => {
-        expandSideBar(expandFolders, sideBar)
+        expandSideBar(expandFolders, sideBar, content)
     })
 }
